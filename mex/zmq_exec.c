@@ -52,7 +52,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
     mexErrMsgTxt(zmq_strerror(zmq_errno()));
 
   /* Send the message */
-  rc = zmq_send(socket, &msg, 0);
+  rc = zmq_send(socket, &msg, sizeof(msg), 0);
   if (rc != 0)
     mexErrMsgTxt(zmq_strerror(zmq_errno()));
   zmq_msg_close(&msg);
@@ -62,7 +62,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
   rc = zmq_msg_init(&msgback);
   if (rc != 0)
     mexErrMsgTxt("Error creating recipient message");
-  rc = zmq_recv(socket, &msgback, 0);
+  rc = zmq_recv(socket, &msgback, sizeof(msgback),0);
   if (rc != 0)
     mexErrMsgTxt(zmq_strerror(zmq_errno()));
   
